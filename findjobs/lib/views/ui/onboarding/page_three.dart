@@ -1,16 +1,15 @@
-
 import 'package:findjobs/constants/app_constants.dart';
 import 'package:findjobs/views/common/app_style.dart';
 import 'package:findjobs/views/common/height_spacer.dart';
 import 'package:findjobs/views/common/my_button.dart';
 import 'package:findjobs/views/common/my_text.dart';
+import 'package:findjobs/views/common/sharedPreferences.dart';
 import 'package:findjobs/views/ui/auth/login_screen.dart';
 import 'package:findjobs/views/ui/auth/register_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class PageThree extends StatelessWidget {
   const PageThree({super.key});
@@ -42,9 +41,10 @@ class PageThree extends StatelessWidget {
             children: [
               MyButton(
                   onTap: () async {
-                    final SharedPreferences prefs =
-                        await SharedPreferences.getInstance();
-                    await prefs.setBool('entrypoint', true);
+                    // final SharedPreferences prefs =
+                    //     await SharedPreferences.getInstance();
+                    // await prefs.setBool('entrypoint', true);
+                    MyCacheManager.addToCacheBool('entrypoint', true);
                     Get.to(() => const LoginPage());
                   },
                   heightBtn: height * 0.06,
