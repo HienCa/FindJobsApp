@@ -10,7 +10,6 @@ import 'package:findjobs/views/common/my_button.dart';
 import 'package:findjobs/views/common/my_text.dart';
 import 'package:findjobs/views/common/my_textfield.dart';
 import 'package:findjobs/views/ui/auth/register_screen.dart';
-import 'package:findjobs/views/ui/home/main_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -135,7 +134,6 @@ class _LoginPageState extends State<LoginPage> {
                                 password:
                                     passwordTextEditingController.text.trim());
                             loginNotifier.userLogin(model);
-                            // Get.to(() => const MainScreen());
                           } else {
                             Get.snackbar(
                                 "Sign Failed", "Please Check your credential",

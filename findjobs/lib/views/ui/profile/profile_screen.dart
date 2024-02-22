@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:findjobs/constants/app_constants.dart';
+import 'package:findjobs/controllers/image_provider.dart';
 import 'package:findjobs/controllers/profile_provider.dart';
 import 'package:findjobs/models/response/user/profile_response_model.dart';
 import 'package:findjobs/views/common/app_style.dart';
@@ -29,7 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
         appBar: PreferredSize(
             preferredSize: Size.fromHeight(50.h),
             child: MyAppBar(
-              text: "Jobs",
+              text: "Personal infomation",
               actions: [
                 Padding(
                   padding: EdgeInsets.all(12.h),
@@ -53,7 +54,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   } else if (snapshot.hasError) {
                     return Text("Error ${snapshot.error}");
                   } else {
-                    final UserData = snapshot.data;
+                    final userData = snapshot.data;
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: ListView(
@@ -64,20 +65,33 @@ class _ProfilePageState extends State<ProfilePage> {
                             height: height * 0.12,
                             color: Color(kLight.value),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    ClipRRect(
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(20)),
-                                      child: CachedNetworkImage(
-                                        imageUrl: UserData?.profile ??
-                                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s",
-                                        width: 80.w,
-                                        height: 100.h,
-                                      ),
-                                    ),
+                                    Consumer<ImageNotifier>(
+                                      builder: (context, imageNotifier, child) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            // imageNotifier.pickImage();
+                                          },
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(20)),
+                                            child: CachedNetworkImage(
+                                              imageUrl: userData?.profile ??
+                                                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s",
+                                              width: 80.w,
+                                              height: 100.h,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    )
                                   ],
                                 ),
                                 const WidthSpacer(size: 20),
@@ -86,24 +100,24 @@ class _ProfilePageState extends State<ProfilePage> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     MyText(
-                                        text: UserData!.username,
+                                        text: userData!.username,
                                         style: appstyle(20, Color(kDark.value),
                                             FontWeight.w600)),
                                     Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                          MainAxisAlignment.start,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
                                         Icon(
-                                          CupertinoIcons.location,
+                                          Icons.add_location_alt_outlined,
                                           color: Color(kDarkGrey.value),
                                         ),
                                         const WidthSpacer(size: 5),
                                         MyText(
-                                            text: UserData.location,
+                                            text: userData.location,
                                             style: appstyle(
-                                                16,
+                                                14,
                                                 Color(kDarkGrey.value),
                                                 FontWeight.w600)),
                                       ],
@@ -187,10 +201,16 @@ class _ProfilePageState extends State<ProfilePage> {
                               color: Color(kLight.value),
                               child: Align(
                                 alignment: Alignment.centerLeft,
-                                child: MyText(
-                                    text: UserData.email,
-                                    style: appstyle(16, Color(kDark.value),
-                                        FontWeight.w600)),
+                                child: Row(
+                                  children: [
+                                    const Icon(CupertinoIcons.mail),
+                                    const WidthSpacer(size: 15),
+                                    MyText(
+                                        text: userData.email,
+                                        style: appstyle(16, Color(kDark.value),
+                                            FontWeight.w600)),
+                                  ],
+                                ),
                               )),
                           const HeightSpacer(size: 20),
                           Container(
@@ -205,7 +225,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     const Icon(CupertinoIcons.phone),
                                     const WidthSpacer(size: 15),
                                     MyText(
-                                        text: UserData.phone,
+                                        text: userData.phone,
                                         style: appstyle(16, Color(kDark.value),
                                             FontWeight.w600)),
                                   ],
@@ -224,32 +244,37 @@ class _ProfilePageState extends State<ProfilePage> {
                                       style: appstyle(20, Color(kDark.value),
                                           FontWeight.w600)),
                                 ),
-                                const HeightSpacer(size: 20),
+                                const HeightSpacer(size: 10),
                                 SizedBox(
-                                  height: height * 0.5,
+                                  height: height * 0.35,
                                   child: Padding(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: 8.w, vertical: 8.h),
                                       child: ListView.builder(
                                           physics:
                                               const NeverScrollableScrollPhysics(),
-                                          itemCount: UserData.skills.length,
+                                          itemCount: userData.skills.length,
                                           itemBuilder: (context, index) {
                                             final skill =
-                                                UserData.skills[index];
+                                                userData.skills[index];
                                             return Container(
+                                              margin: EdgeInsets.symmetric(
+                                                vertical: 2.h,
+                                              ),
                                               padding: EdgeInsets.symmetric(
                                                 horizontal: 10.w,
                                               ),
                                               width: width,
                                               height: height * 0.06,
                                               color: Color(kLight.value),
-                                              child: MyText(
-                                                  text: skill,
-                                                  style: appstyle(
-                                                      16,
-                                                      Color(kDark.value),
-                                                      FontWeight.normal)),
+                                              child: Center(
+                                                child: MyText(
+                                                    text: skill,
+                                                    style: appstyle(
+                                                        16,
+                                                        Color(kDark.value),
+                                                        FontWeight.normal)),
+                                              ),
                                             );
                                           })),
                                 )

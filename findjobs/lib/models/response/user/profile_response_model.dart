@@ -31,15 +31,15 @@ class ProfileResponseModel {
 
   factory ProfileResponseModel.fromJson(Map<String, dynamic> json) =>
       ProfileResponseModel(
-        id: json["_id"],
-        username: json["username"],
-        phone: json["phone"],
-        location: json["location"],
-        email: json["email"],
-        isAdmin: json["isAdmin"],
-        isAgent: json["isAgent"],
+        id: json["_id"] ?? "",
+        username: json["username"] ?? "",
+        phone: json["phone"] ?? "",
+        location: json["location"] ?? "",
+        email: json["email"] ?? "",
+        isAdmin: json["isAdmin"] ?? "",
+        isAgent: json["isAgent"] ?? "",
         skills: List<String>.from(json["skills"].map((x) => x)),
-        profile: json["profile"],
+        profile: json["profile"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {

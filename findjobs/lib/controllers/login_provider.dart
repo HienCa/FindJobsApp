@@ -72,9 +72,12 @@ class LoginNotifier extends ChangeNotifier {
   userLogin(LoginModel model) {
     AuthHelper.login(model).then((response) {
       if (response && firstTime) {
+        print("ss");
         Get.off(() => const PersonalDetails());
       } else if (response && !firstTime) {
         Get.off(() => const MainScreen());
+        print("hh");
+
       } else if (!response) {
         Get.snackbar("Sign Failed", "Please Check your credential",
             colorText: Color(kLight.value),

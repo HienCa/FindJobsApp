@@ -71,14 +71,15 @@ class AuthHelper {
 
   static Future<ProfileResponseModel> getProfile() async {
     String? token = await MyCacheManager.getFromCache('token');
+    String? userId = await MyCacheManager.getFromCache('userId');
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
       'token': 'Bearer $token'
     };
 
-    var url = Uri.https(Config.apiUrl, Config.profileUrl);
+    var url = Uri.https(Config.apiUrl,"${Config.profileUrl}/$userId");
 
-    var response = await client.post(url, headers: requestHeaders);
+    var response = await client.get(url, headers: requestHeaders);
     if (response.statusCode == 200) {
       var profile = profileResponseModelFromJson(response.body);
       return profile;
