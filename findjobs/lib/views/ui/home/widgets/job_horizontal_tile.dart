@@ -1,4 +1,5 @@
 import 'package:findjobs/constants/app_constants.dart';
+import 'package:findjobs/models/response/job/jobs_response_model.dart';
 import 'package:findjobs/views/common/app_style.dart';
 import 'package:findjobs/views/common/height_spacer.dart';
 import 'package:findjobs/views/common/my_text.dart';
@@ -8,8 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class JobHorizontalTile extends StatelessWidget {
-  const JobHorizontalTile({super.key, this.onTap});
+  const JobHorizontalTile({super.key, this.onTap, required this.job});
   final void Function()? onTap;
+  final JobsResponseModel job;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -26,21 +28,21 @@ class JobHorizontalTile extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const CircleAvatar(
-                    backgroundImage: AssetImage("assets/images/logo.jpg"),
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(job.imageUrl),
                   ),
                   const WidthSpacer(size: 15),
                   MyText(
-                      text: "FaceBook",
+                      text: job.company,
                       style: appstyle(20, Color(kDark.value), FontWeight.w600))
                 ],
               ),
               const HeightSpacer(size: 15),
               MyText(
-                  text: "Senior Flutrter Developer",
+                  text: job.title,
                   style: appstyle(16, Color(kDarkGrey.value), FontWeight.w600)),
               MyText(
-                  text: "VietNam Jobs",
+                  text: job.location,
                   style: appstyle(16, Color(kDarkGrey.value), FontWeight.w600)),
               const HeightSpacer(size: 20),
               Row(
@@ -50,17 +52,17 @@ class JobHorizontalTile extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       MyText(
-                          text: "15K",
+                          text: job.salary,
                           style: appstyle(
-                              23, Color(kDark.value), FontWeight.w600)),
+                              16, Color(kDark.value), FontWeight.w600)),
                       MyText(
-                          text: "/monthly",
+                          text: "/${job.period}",
                           style: appstyle(
-                              23, Color(kDarkGrey.value), FontWeight.w600)),
+                              16, Color(kDarkGrey.value), FontWeight.w600)),
                     ],
                   ),
                   CircleAvatar(
-                    radius: 20,
+                    radius: 18,
                     backgroundColor: Color(kLight.value),
                     child: const Icon(CupertinoIcons.chevron_forward),
                   )

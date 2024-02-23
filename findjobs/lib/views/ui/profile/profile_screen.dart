@@ -8,7 +8,7 @@ import 'package:findjobs/views/common/height_spacer.dart';
 import 'package:findjobs/views/common/my_appbar.dart';
 import 'package:findjobs/views/common/my_text.dart';
 import 'package:findjobs/views/common/width_spacer.dart';
-import 'package:findjobs/views/ui/home/drawer_widget.dart';
+import 'package:findjobs/views/ui/home/widgets/drawer_widget.dart';
 import 'package:findjobs/views/ui/profile/profile_update.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,17 +29,9 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
         appBar: PreferredSize(
             preferredSize: Size.fromHeight(50.h),
-            child: MyAppBar(
+            child: const MyAppBar(
               text: "Personal infomation",
-              actions: [
-                Padding(
-                  padding: EdgeInsets.all(12.h),
-                  child: CircleAvatar(
-                      child: Image.asset("assets/images/logo.jpg",
-                          width: 30.w, height: 30.h)),
-                )
-              ],
-              child: const DrawerWidget(),
+              child: DrawerWidget(),
             )),
         body: Consumer<ProfileNotifier>(
           builder: (context, profileNotifier, child) {
@@ -60,77 +52,96 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: ListView(
                         padding: EdgeInsets.zero,
                         children: [
-                          Container(
-                            width: width,
-                            height: height * 0.12,
-                            color: Color(kLight.value),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Consumer<ImageNotifier>(
-                                      builder: (context, imageNotifier, child) {
-                                        return GestureDetector(
-                                          onTap: () {
-                                            // imageNotifier.pickImage();
-                                          },
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(20)),
-                                            child: CachedNetworkImage(
-                                              imageUrl: userData?.profile ??
-                                                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s",
-                                              width: 80.w,
-                                              height: 100.h,
+                          GestureDetector(
+                            onTap: () {
+                              Get.to(() =>  ProfileUpdatePage(profile: userData,));
+                            },
+                            child: Container(
+                              width: width,
+                              height: height * 0.12,
+                              color: Color(kLight.value),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Consumer<ImageNotifier>(
+                                        builder:
+                                            (context, imageNotifier, child) {
+                                          return GestureDetector(
+                                            onTap: () {
+                                              // imageNotifier.pickImage();
+                                            },
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(20)),
+                                              child: CachedNetworkImage(
+                                                imageUrl: userData?.profile ??
+                                                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEBqYEUHs9SPync2bo8AmdYjzW5WYicOWF8lreCXnMcQ&s",
+                                                width: 80.w,
+                                                height: 100.h,
+                                              ),
                                             ),
-                                          ),
-                                        );
-                                      },
-                                    )
-                                  ],
-                                ),
-                                const WidthSpacer(size: 20),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    MyText(
-                                        text: userData!.username,
-                                        style: appstyle(20, Color(kDark.value),
-                                            FontWeight.w600)),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.add_location_alt_outlined,
-                                          color: Color(kDarkGrey.value),
-                                        ),
-                                        const WidthSpacer(size: 5),
-                                        MyText(
-                                            text: userData.location,
-                                            style: appstyle(
-                                                14,
-                                                Color(kDarkGrey.value),
-                                                FontWeight.w600)),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Get.to(() => const ProfileUpdatePage());
-                                  },
-                                  child: const Icon(Icons.edit, size: 18),
-                                )
-                              ],
+                                          );
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                  const WidthSpacer(size: 20),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          MyText(
+                                              text: userData!.username,
+                                              style: appstyle(
+                                                  20,
+                                                  Color(kDark.value),
+                                                  FontWeight.w600)),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              Icon(
+                                                Icons.add_location_alt_outlined,
+                                                color: Color(kDarkGrey.value),
+                                                size: 16.w,
+                                              ),
+                                              const WidthSpacer(size: 5),
+                                              MyText(
+                                                  text: userData.location,
+                                                  style: appstyle(
+                                                      14,
+                                                      Color(kDarkGrey.value),
+                                                      FontWeight.w600)),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                      // GestureDetector(
+                                      //   onTap: () {
+                                      //     Get.to(
+                                      //         () => const ProfileUpdatePage());
+                                      //   },
+                                      //   child: const Icon(Icons.edit, size: 18),
+                                      // )
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           const HeightSpacer(size: 20),
@@ -267,7 +278,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                               width: width,
                                               height: height * 0.06,
                                               color: Color(kLight.value),
-                                              child: Center(
+                                              child: Align(
+                                                alignment: Alignment.centerLeft,
                                                 child: MyText(
                                                     text: skill,
                                                     style: appstyle(

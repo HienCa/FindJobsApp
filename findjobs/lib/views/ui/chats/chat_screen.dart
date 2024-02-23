@@ -1,5 +1,5 @@
 import 'package:findjobs/views/common/my_appbar.dart';
-import 'package:findjobs/views/ui/home/drawer_widget.dart';
+import 'package:findjobs/views/ui/home/widgets/drawer_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

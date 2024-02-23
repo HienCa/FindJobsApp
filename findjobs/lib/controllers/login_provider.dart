@@ -77,7 +77,6 @@ class LoginNotifier extends ChangeNotifier {
       } else if (response && !firstTime) {
         Get.off(() => const MainScreen());
         print("hh");
-
       } else if (!response) {
         Get.snackbar("Sign Failed", "Please Check your credential",
             colorText: Color(kLight.value),
@@ -94,13 +93,13 @@ class LoginNotifier extends ChangeNotifier {
   }
 
   updateProfile(ProfileUpdateReq model) async {
-    String? userId = await MyCacheManager.getFromCache('id');
+    String? userId = await MyCacheManager.getFromCache('userId');
     if (userId!.isNotEmpty) {
       AuthHelper.updateProfile(model, userId).then((response) {
         if (response && firstTime) {
           Get.snackbar("Update Successful!", "Enjoy your search for a job!",
               colorText: Color(kLight.value),
-              backgroundColor: Colors.red,
+              backgroundColor: Color(kLightBlue.value),
               icon: const Icon(Icons.add_alert));
           Future.delayed(const Duration(seconds: 3))
               .then((value) => {Get.offAll(() => const MainScreen())});

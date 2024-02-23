@@ -1,4 +1,5 @@
 import 'package:findjobs/constants/app_constants.dart';
+import 'package:findjobs/models/response/job/jobs_response_model.dart';
 import 'package:findjobs/views/common/app_style.dart';
 import 'package:findjobs/views/common/my_text.dart';
 import 'package:findjobs/views/common/width_spacer.dart';
@@ -7,9 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class VerticalTile extends StatelessWidget {
-  const VerticalTile({super.key, this.onTap, required this.text});
+  const VerticalTile({super.key, this.onTap, required this.job});
   final void Function()? onTap;
-  final String text;
+  final JobsResponseModel job;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -32,8 +33,7 @@ class VerticalTile extends StatelessWidget {
                     CircleAvatar(
                       backgroundColor: Color(kLightGrey.value),
                       radius: 30,
-                      backgroundImage:
-                          const AssetImage("assets/images/logo.jpg"),
+                      backgroundImage: NetworkImage(job.imageUrl),
                     ),
                     const WidthSpacer(size: 10),
                     Column(
@@ -41,13 +41,13 @@ class VerticalTile extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         MyText(
-                            text: text,
+                            text: job.company,
                             style: appstyle(
                                 20, Color(kDark.value), FontWeight.w600)),
                         SizedBox(
                           width: width * 0.5,
                           child: MyText(
-                              text: "Django Developer",
+                              text: job.title,
                               style: appstyle(
                                   20, Color(kDarkGrey.value), FontWeight.w600)),
                         )
@@ -67,12 +67,12 @@ class VerticalTile extends StatelessWidget {
               child: Row(
                 children: [
                   MyText(
-                      text: "20k",
-                      style: appstyle(23, Color(kDark.value), FontWeight.w600)),
+                      text: job.salary,
+                      style: appstyle(16, Color(kDark.value), FontWeight.w600)),
                   MyText(
-                      text: "/monthly",
+                      text: "/${job.period}",
                       style:
-                          appstyle(23, Color(kDarkGrey.value), FontWeight.w600))
+                          appstyle(16, Color(kDarkGrey.value), FontWeight.w600))
                 ],
               ),
             ),

@@ -10,7 +10,9 @@ class MyTextField extends StatelessWidget {
       required this.keyboardType,
       this.suffixIcon,
       this.obscureText,
-      this.validator, this.prefixIcon});
+      this.validator,
+      this.prefixIcon,
+      this.onEditingComplete});
   final TextEditingController controller;
   final String hintText;
   final TextInputType keyboardType;
@@ -18,6 +20,7 @@ class MyTextField extends StatelessWidget {
   final Icon? prefixIcon;
   final bool? obscureText;
   final String? Function(String?)? validator;
+  final void Function()? onEditingComplete;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -50,6 +53,7 @@ class MyTextField extends StatelessWidget {
         cursorHeight: 25,
         style: appstyle(14, Color(kDark.value), FontWeight.w500),
         validator: validator,
+        onEditingComplete: onEditingComplete,
       ),
     );
   }
