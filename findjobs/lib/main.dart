@@ -1,4 +1,5 @@
 import 'package:findjobs/controllers/bookmark_provider.dart';
+import 'package:findjobs/controllers/chat_provider.dart';
 import 'package:findjobs/controllers/image_provider.dart';
 import 'package:findjobs/controllers/jobs_provider.dart';
 import 'package:findjobs/controllers/login_provider.dart';
@@ -38,6 +39,7 @@ void main() async {
     ChangeNotifierProvider(create: (context) => BookMarkNotifier()),
     ChangeNotifierProvider(create: (context) => ZoomNotifier()),
     ChangeNotifierProvider(create: (context) => ProfileNotifier()),
+    ChangeNotifierProvider(create: (context) => ChatNotifier()),
   ], child: const MyApp()));
 }
 

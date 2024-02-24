@@ -3,8 +3,7 @@
 import 'package:findjobs/constants/app_constants.dart';
 import 'package:findjobs/models/response/job/jobs_response_model.dart';
 import 'package:findjobs/services/helpers/jobs_helper.dart';
-import 'package:findjobs/views/common/app_style.dart';
-import 'package:findjobs/views/common/my_text.dart';
+import 'package:findjobs/views/common/data_empty.dart';
 import 'package:findjobs/views/common/my_textfield.dart';
 import 'package:findjobs/views/ui/home/widgets/vertical_tile.dart';
 import 'package:flutter/cupertino.dart';
@@ -65,7 +64,7 @@ class _SearchPageState extends State<SearchPage> {
                     } else if (snapshot.hasError) {
                       return Text("Error: ${snapshot.error}");
                     } else if (snapshot.data!.isEmpty) {
-                      return const SearchLoading(
+                      return const DataEmpty(
                         text: "Job not found",
                       );
                     } else {
@@ -81,32 +80,9 @@ class _SearchPageState extends State<SearchPage> {
                   },
                 ),
               )
-            : const SearchLoading(text: "Start search for jobs"));
+            : const DataEmpty(text: "Start search for jobs"));
   }
 }
 
-class SearchLoading extends StatelessWidget {
-  const SearchLoading({
-    super.key,
-    required this.text,
-  });
-  final String text;
 
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: EdgeInsets.all(20.h),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset("assets/images/search-jobs.jpg"),
-            MyText(
-                text: text,
-                style: appstyle(24, Color(kDark.value), FontWeight.bold)),
-          ],
-        ),
-      ),
-    );
-  }
-}
+
