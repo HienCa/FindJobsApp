@@ -1,12 +1,13 @@
 // ignore_for_file: prefer_final_fields
 
+import 'package:findjobs/models/response/chat/get_chat_model.dart';
 import 'package:findjobs/services/helpers/chat_helper.dart';
 import 'package:findjobs/views/common/sharedpreferences.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
 class ChatNotifier extends ChangeNotifier {
-  late Future<List<GetChats>> chats;
+  late Future<List<GetChatsModel>> chats;
 
   bool _typing = false;
   bool get typing => _typing;

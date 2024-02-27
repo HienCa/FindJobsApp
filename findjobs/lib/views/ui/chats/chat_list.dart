@@ -2,6 +2,7 @@
 
 import 'package:findjobs/constants/app_constants.dart';
 import 'package:findjobs/controllers/chat_provider.dart';
+import 'package:findjobs/models/response/chat/get_chat_model.dart';
 import 'package:findjobs/views/common/app_style.dart';
 import 'package:findjobs/views/common/data_empty.dart';
 import 'package:findjobs/views/common/height_spacer.dart';
@@ -9,8 +10,7 @@ import 'package:findjobs/views/common/my_appbar.dart';
 import 'package:findjobs/views/common/my_text.dart';
 import 'package:findjobs/views/ui/chats/chat_screen.dart';
 import 'package:findjobs/views/ui/home/widgets/drawer_widget.dart';
-import 'package:findjobs/views/ui/search/widgets/search_screen.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -40,7 +40,7 @@ class ChatListPage extends StatelessWidget {
           chatNotifier.getChats();
           chatNotifier.getPrefs();
           print(chatNotifier.userId);
-          return FutureBuilder<List<GetChats>>(
+          return FutureBuilder<List<GetChatsModel>>(
             future: chatNotifier.chats,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
@@ -48,6 +48,7 @@ class ChatListPage extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 );
               } else if (snapshot.hasError) {
+                print(snapshot.error);
                 return MyText(
                     text: "Error: ${snapshot.error}",
                     style: appstyle(20, Color(kOrange.value), FontWeight.w600));
@@ -100,7 +101,7 @@ class ChatListPage extends StatelessWidget {
                                         FontWeight.w600)),
                                 const HeightSpacer(size: 5),
                                 MyText(
-                                    text: user.latestMessage.content,
+                                    text: chat.latestMessage.content,
                                     style: appstyle(16, Color(kDarkGrey.value),
                                         FontWeight.normal)),
                               ],
@@ -116,7 +117,7 @@ class ChatListPage extends StatelessWidget {
                                 children: [
                                   MyText(
                                       text: chatNotifier
-                                          .msgTime(user.updatedAt.toString()),
+                                          .msgTime(chat.updatedAt.toString()),
                                       style: appstyle(16, Color(kDark.value),
                                           FontWeight.normal)),
                                   Icon(chat.chatName == chatNotifier.userId

@@ -1,7 +1,7 @@
 import 'package:findjobs/constants/app_constants.dart';
 import 'package:findjobs/controllers/zoom_provider.dart';
 import 'package:findjobs/views/ui/bookmarks/bookmark_screen.dart';
-import 'package:findjobs/views/ui/chats/chat_screen.dart';
+import 'package:findjobs/views/ui/chats/chat_list.dart';
 import 'package:findjobs/views/ui/devide_mgt/device_management_screen.dart';
 import 'package:findjobs/views/ui/drawer/drawer_screen.dart';
 import 'package:findjobs/views/ui/home/home_screen.dart';
@@ -45,7 +45,7 @@ class _MainScreenState extends State<MainScreen> {
       case 0:
         return const HomePage();
       case 1:
-        return const ChatPage();
+        return  const ChatListPage();
       case 2:
         return const BookMarkPage();
       case 3:

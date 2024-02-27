@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:findjobs/models/request/chat/create_chat_model.dart';
+import 'package:findjobs/models/response/chat/get_chat_model.dart';
 import 'package:findjobs/models/response/chat/initital_msg_res_model.dart';
 import 'package:findjobs/services/config.dart';
 import 'package:findjobs/views/common/sharedpreferences.dart';
@@ -28,7 +29,7 @@ class ChatHelper {
     }
   }
 
-  static Future<List<GetChats>> getConversations() async {
+  static Future<List<GetChatsModel>> getConversations() async {
     String? token = await MyCacheManager.getFromCache('token');
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
@@ -41,11 +42,17 @@ class ChatHelper {
       url,
       headers: requestHeaders,
     );
-    var chats = getChatsFromJson(response.body);
+
     if (response.statusCode == 200) {
-      return chats;
+      try {
+        var chats = getChatsModelFromJson(response.body);
+        return chats;
+      } catch (e) {
+        throw Exception("Couldn't load chats. Invalid JSON response.");
+      }
     } else {
-      throw Exception("Couldn't load chats");
+      throw Exception(
+          "Couldn't load chats. Status Code: ${response.statusCode}");
     }
   }
 }
